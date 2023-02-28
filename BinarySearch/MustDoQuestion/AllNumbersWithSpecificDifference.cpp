@@ -1,3 +1,71 @@
+revisited.
+1.
+//{ Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+class Solution {
+  public:
+  
+  long long getSum(long long mid)
+  {
+      long long ans=0;
+      while(mid)
+      {
+          ans+=mid%10;
+          mid/=10;
+      }
+      return ans;
+  }
+  
+  
+    long long getCount(long long N , long long D) {
+        // code here
+        
+        // 0 to 9 == 0
+        // 10 to 19 == 9
+        // 20 to 29 == 18
+        
+        long long start=0;
+        long long end = N;
+        long long ans=0;
+        
+        while(start<=end)
+        {
+            long long mid =start+ (end-start)/2;
+            
+            if( (mid-getSum(mid)) >= D)
+            {
+                ans+=end-mid+1;
+                end=mid-1;
+            }
+            else
+            start=mid+1;
+        }
+        
+        return ans;
+    }
+};
+
+//{ Driver Code Starts.
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        long long N,D;
+
+        cin>>N>>D;
+
+        Solution ob;
+        cout << ob.getCount(N,D) << endl;
+    }
+    return 0;
+}
+// } Driver Code Ends
+
+2.
+
 //{ Driver Code Starts
 #include <bits/stdc++.h>
 using namespace std;

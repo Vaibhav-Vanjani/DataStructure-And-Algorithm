@@ -1,3 +1,111 @@
+revisited.
+1.
+//{ Driver Code Starts
+// Initial template for C++
+
+#include<bits/stdc++.h>
+using namespace std;
+
+
+// } Driver Code Ends
+//User function template in C++
+
+class Solution 
+{
+    public:
+    
+    // imp.
+    // (student < = no. of book) condition is true
+    
+    bool isAnswer(int mid,int A[],int N,int M)
+    {
+        int student=1;
+        int sum=0;
+        for(int i=0;i<N;i++)
+        {
+            if(A[i]>mid)return false;
+            
+            sum+=A[i];
+            if(sum>mid)
+            {
+                sum=A[i];
+                student++;
+                
+                if(student>M)return false;
+            }
+        }
+        
+       return true;
+    }
+    
+    
+    //Function to find minimum number of pages.
+    int findPages(int A[], int N, int M) 
+    {
+        //code here
+        
+        // m=no. of student 
+        // n=no. of books
+        // A[i]= ith book has pages A[i]
+        
+        if(M>N)return -1;
+        
+        
+        int sum=0;
+        for(int i=0;i<N;i++)
+        {
+            sum+=A[i];
+        }
+        int start=0;
+        int end=sum;
+        
+        int res=-1;
+        while(start<=end)
+        {
+            int mid=start+ (end-start)/2;
+            
+            if(isAnswer(mid,A,N,M))
+            {
+                res=mid;
+                end=mid-1;
+            }
+            else
+            {
+                start=mid+1;
+            }
+        }
+        return res;
+        
+        
+    }
+};
+
+//{ Driver Code Starts.
+
+int main() {
+    int t;
+    cin>>t;
+    while(t--){
+        int n;
+        cin>>n;
+        int A[n];
+        for(int i=0;i<n;i++){
+            cin>>A[i];
+        }
+        int m;
+        cin>>m;
+        Solution ob;
+        cout << ob.findPages(A, n, m) << endl;
+    }
+    return 0;
+}
+
+// } Driver Code Ends
+
+
+
+2.
+
 //{ Driver Code Starts
 // Initial template for C++
 
