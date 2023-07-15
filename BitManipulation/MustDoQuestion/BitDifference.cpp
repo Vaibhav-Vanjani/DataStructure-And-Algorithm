@@ -54,6 +54,7 @@ class Solution{
 };
 
 ----2nd Method ----
+using exor approach 
 
 class Solution{
     public:
@@ -64,6 +65,9 @@ class Solution{
     int countBitsFlip(int a, int b){
         
         // Your logic here
+	
+	
+
        int answer = a^b;
 	// get 1 where there is difference in bit 
        int count=0;
