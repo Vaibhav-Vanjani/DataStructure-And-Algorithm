@@ -1,4 +1,70 @@
+class Solution {
+public:
+    int findMin(vector<int>& nums) {
+        
+            //    prev > mini < next 
 
+
+            //    prev  = (n+i-1)%n;
+
+            //    0  (n-1 + 0)%n == 1
+            //    1  (n-1+1)%n
+            //    2  (n-1+2)%n
+
+            //    next 
+
+            //    n-1   (i+1)%n;
+            //    3    (n-1-3)%n
+
+            //  3  4() 
+// // 
+//             1 2 3 4 5 left
+//             5 1 2 3 4 left
+//             4 5 1 2 3 ans
+//             3 4 5 1 2 right
+            
+//             2 3 4 5 1 right
+
+
+//             1 2
+
+
+
+            int start =0;
+            int end=nums.size()-1;
+            int n = end+1;
+
+            while(start<=end)
+            {
+               
+
+                int mid = start+(end-start)/2;
+                 int prev = (n+mid-1)%n;
+                int next = (mid+1)%n;
+
+                if(nums[mid]<=nums[next] && nums[mid]<=nums[prev])
+                {
+                    return nums[mid];
+                }
+                else 
+                {
+                    if(nums[mid]>=nums[start] && nums[mid]>nums[end])
+                    {
+                        start = mid+1;
+                    }
+                    else
+                    {
+                        end = mid -1;
+                    }
+                }
+                 
+            }
+
+            return 0;
+
+    }
+};
+---------------------------------
 
 //revisited : 
 1.
