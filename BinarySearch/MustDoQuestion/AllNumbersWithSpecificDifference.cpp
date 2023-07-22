@@ -1,3 +1,70 @@
+//{ Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+class Solution {
+  public:
+  
+    long long getMidCount(long long mid)
+    {
+        long long ans = 0;
+        
+        while(mid)
+        {
+            ans += mid%10;
+            mid=mid/10;
+        }
+        return ans;
+    }
+  
+    long long getCount(long long N , long long D) {
+        // code here
+        
+        // 1-9 == 0
+        // 10-19 == 9
+        // 20-29 == 18
+        
+        
+        long long start = 1 ;
+        long long end = N;
+        
+        long long mid = 0;
+        long long int ans = 0;
+        while(start<=end)
+        {
+             mid = start +(end-start)/2;
+             
+             if( (mid - getMidCount(mid)) >= D )
+             {
+                 ans += end-mid+1;
+                 end=mid-1;
+             }
+             else
+             {
+             start=mid+1;
+             }
+        }
+        return ans;
+    }
+};
+
+//{ Driver Code Starts.
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        long long N,D;
+
+        cin>>N>>D;
+
+        Solution ob;
+        cout << ob.getCount(N,D) << endl;
+    }
+    return 0;
+}
+// } Driver Code Ends
+
 revisited.
 1.
 //{ Driver Code Starts
