@@ -1,3 +1,54 @@
+//sort an array using recursion
+
+// Online C++ compiler to run C++ program online
+#include <bits/stdc++.h>
+using namespace std;
+
+vector<int> sort_rec(vector<int> ans)
+{
+    if(ans.size()==1)return ans;
+    
+    int temp = ans[ans.size()-1];
+    ans.erase(ans.begin()+ans.size()-1);
+    
+    // 5 1 2
+
+    vector<int> x = sort_rec(ans);
+    // temp = 3;
+    // 1 2 5
+    int i=x.size()-1;
+    for(;i>=0;i--)
+    {
+        if(x[i]<temp)
+        {
+            x.insert(x.begin()+i+1,temp);
+            break;
+        }
+    }
+    
+    if(i<0)x.insert(x.begin()+i+1,temp);
+    // cout<<temp<<endl;
+    return x;
+    
+  
+     
+}
+
+int main() {
+    // Write C++ cod
+    
+    vector<int> ans = {3,5,1,2};
+    
+    vector<int> ans_arr = sort_rec(ans);
+    
+    for(int i=0;i<ans_arr.size();i++)
+    {
+        cout<<ans_arr[i]<<" "; 
+    }
+    
+    return 0;
+}
+--------------------------------------------------------
 
 // SortArrayUsingRecursion
 
