@@ -1,3 +1,31 @@
+class Solution {
+public:
+    int subarraySum(vector<int>& nums, int k) {
+        
+        int count=0;
+        long sum=0;
+        unordered_map<int,int> mp;
+        int n =nums.size();
+        long K=k;
+
+
+        for(int i=0;i<n;i++)
+        {
+            sum+=nums[i];
+            if(sum == K)
+            count++;
+
+            if(mp.find(sum-K)!=mp.end())
+            {
+                count+=mp[sum-K];
+            }
+             mp[sum]++;
+        }
+        return count;
+    }
+};
+
+
 //{ Driver Code Starts
 #include<bits/stdc++.h>
 using namespace std;
