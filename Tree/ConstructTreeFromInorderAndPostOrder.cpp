@@ -1,106 +1,97 @@
 //{ Driver Code Starts
-//
-
-#include<bits/stdc++.h>
+/* program to construct tree using inorder and postorder traversals */
+#include <bits/stdc++.h>
 using namespace std;
 
-struct Node
-{
-	int data;
-	struct Node *left;
-	struct Node *right;
-	
-	Node(int x){
-	    data = x;
-	    left = NULL;
-	    right = NULL;
-	}
+/* A binary tree node has data, pointer to left child
+   and a pointer to right child */
+struct Node {
+    int data;
+    struct Node* left;
+    struct Node* right;
+
+    Node(int x) {
+        data = x;
+        left = right = NULL;
+    }
 };
 
+/* This funtcion is here just to test buildTreeUtil() */
+void preOrder(Node* node) {
+    if (node == NULL) return;
 
-void printPostOrder(Node *root)
-{
-	if(root==NULL)
-		return;
-	printPostOrder(root->left);
-	printPostOrder(root->right);
-	cout<<root->data<<" ";
+    /* then print the data of node */
+    printf("%d ", node->data);
+
+    /* first recur on left child */
+    preOrder(node->left);
+
+    /* now recur on right child */
+    preOrder(node->right);
+}
+
+Node* buildTree(int in[], int post[], int n);
+
+int main() {
+    int t, n;
+    cin >> t;
+    while (t--) {
+        cin >> n;
+        int in[n], post[n];
+        for (int i = 0; i < n; i++) cin >> in[i];
+        for (int i = 0; i < n; i++) cin >> post[i];
+        Node* root = buildTree(in, post, n);
+        preOrder(root);
+        cout << endl;
+    }
+    return 0;
 }
 
 // } Driver Code Ends
 
-/*Complete the code here.
-Node is as follows:
+
+
+
+/* Tree node structure
+
 struct Node
 {
-  int data;
-  Node* left;
-  Node* right;
-};
-*/
-class Solution{
-    public:
-    
-    Node* helper(int is,int ie,int &idx,int in[],int pre[],unordered_map<int,int> &mp,int n)
-    {
-        if(is>ie or (idx>(n-1)))return NULL;
-         
-           
-        int pos;
-        for(int i=is;i<=ie;i++)
-        {
-            if(in[i]==pre[idx])
-            {
-                pos = i;
-                break;
-            }
-        }
-         int ele = pre[idx++];    
-        Node* root = new Node(ele);
-        
-        
-        
-        root->left = helper(is,pos-1,idx,in,pre,mp,n);
-        root->right = helper(pos+1,ie,idx,in,pre,mp,n);
-        
-        return root;
-    }
-    
-    
-    
-    Node* buildTree(int in[],int pre[], int n)
-    {
-        // Code here
-        unordered_map<int,int> mp;
-        for(int i=0;i<n;i++)
-        {
-            mp[in[i]] = i;
-        }
-        int idx=0;
-        return helper(0,n-1,idx,in,pre,mp,n);
-    }
-};
+    int data;
+    struct Node* left;
+    struct Node* right;
 
-//{ Driver Code Starts.
-int main()
+    Node(int x){
+        data = x;
+        left = right = NULL;
+    }
+};*/
+
+//Function to return a tree created from postorder and inoreder traversals.
+
+Node* helper(int &idx,int is,int ie,int in[],int post[],int n)
 {
-	int t;
-	cin>>t;
-	while(t--)
-	{
-		int n;
-		cin>>n;
-		
-		int inorder[n], preorder[n];
-		for(int i=0; i<n; i++)
-			cin>> inorder[i];
-		for(int i=0; i<n; i++)
-			cin>> preorder[i];
-		Solution obj;
-		Node *root = obj.buildTree(inorder, preorder, n);
-		printPostOrder(root);
-		cout<< endl;
-	}
+    if(is>ie || idx<0)return NULL;
+   
+    int ele = post[idx]; 
+    int pos =-1;
+    for(int i=is;i<=ie;i++)
+    {
+        if(in[i]==ele)
+        {pos=i;break;}
+    }
+    idx--;
+    
+    if(pos==-1)return NULL;
+    
+    Node* root = new Node(ele);
+    
+    root->right = helper(idx,pos+1,ie,in,post,n);
+    root->left = helper(idx,is,pos-1,in,post,n);
+    return root;
 }
 
-// } Driver Code Ends
+Node *buildTree(int in[], int post[], int n) {
+    // Your code here
+    int idx = n-1;
+   return helper(idx,0,n-1,in,post,n);
+}
