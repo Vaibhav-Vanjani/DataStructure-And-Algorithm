@@ -42,3 +42,40 @@ public:
 
     }
 };
+
+
+//revisit
+class Solution {
+    int helper(int root,vector<int>& left, vector<int>& right,int dp[])
+    {
+        if(root==-1)return 0;
+        
+        if(!dp[root])dp[root]=1;
+        else return 1;
+
+        return 1 + helper(left[root],left,right,dp) + helper(right[root],left,right,dp);
+    }
+public:
+    bool validateBinaryTreeNodes(int n, vector<int>& left, vector<int>& right) {
+    
+       unordered_map<int,int> indegree;
+       for(int i=0;i<n;i++)
+           indegree[left[i]]++;
+       
+       for(int i=0;i<n;i++)
+           indegree[right[i]]++;
+
+       int cnt=0;
+       int root = 0;
+        for(int i=0;i<n;i++)
+        {
+            if(indegree[i]>1)return false;
+            if(indegree[i]==0){root = i;cnt++;}
+        }
+        if(cnt>1 or cnt==0)return false;
+        int dp[n];
+        memset(dp,0,sizeof(dp));
+        return helper(root,left,right,dp)==n;
+
+    }
+};	
